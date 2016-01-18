@@ -37,41 +37,19 @@ class GameField
 
     public function getNeighboursByCell(Cell $cell)
     {
-        $positionHeight = $cell->getCoordY();
-        $positionWidth = $cell->getCoordX();
+        $y = $cell->getCoordY();
+        $x = $cell->getCoordX();
         $neighbours = 0;
 
-        if ($this->getCellByCoords($positionHeight+1,$positionWidth))
+        for($nX = $x-1; $nX<=$x+1; $nX++)
         {
-            if ($this->getCellByCoords($positionHeight+1,$positionWidth)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight+1,$positionWidth+1))
-        {
-            if ($this->getCellByCoords($positionHeight+1,$positionWidth+1)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight+1,$positionWidth-1))
-        {
-            if ($this->getCellByCoords($positionHeight+1,$positionWidth-1)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight-1,$positionWidth))
-        {
-            if ($this->getCellByCoords($positionHeight-1,$positionWidth)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight-1,$positionWidth+1))
-        {
-            if ($this->getCellByCoords($positionHeight-1, $positionWidth+1)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight-1,$positionWidth-1))
-        {
-            if ($this->getCellByCoords($positionHeight-1,$positionWidth-1)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight,$positionWidth+1))
-        {
-            if ($this->getCellByCoords($positionHeight,$positionWidth+1)->isAlive == 1) $neighbours += 1;
-        }
-        if ($this->getCellByCoords($positionHeight,$positionWidth-1))
-        {
-            if ($this->getCellByCoords($positionHeight,$positionWidth-1)->isAlive == 1) $neighbours += 1;
+            for($nY = $y-1; $nY<=$y+1; $nY++)
+            {
+                if ($this->getCellByCoords($nY,$nX) && !($nX == $x && $nY == $y))
+                {
+                    if ($this->getCellByCoords($nY,$nX)->isAlive == 1) $neighbours++;
+                }
+            }
         }
 
         return $neighbours;
