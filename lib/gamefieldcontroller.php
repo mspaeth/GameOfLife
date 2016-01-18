@@ -23,16 +23,15 @@ class GameFieldController
 
         foreach ($currentGameField->getCells() as $cell)
         {
+            $neighbours = $currentGameField->getNeighboursByCell($cell);
             if ($cell->isAlive == 0)
             {
                 if($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=1;
             }
             if ($cell->isAlive == 1)
             {
-                if($currentGameField->getNeighboursByCell($cell) < 2) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=0;
-                elseif($currentGameField->getNeighboursByCell($cell) == 2) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=1;
-                elseif($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=1;
-                elseif($currentGameField->getNeighboursByCell($cell) > 3) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=0;
+                if($neighbours == 2 || $neighbours == 3) $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=1;
+                else $this->gameField->getCellByCoords($cell->getCoordY(),$cell->getCoordX())->isAlive=0;
             }
         }
         return true;
