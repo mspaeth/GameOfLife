@@ -16,6 +16,14 @@ class GameField
         $this->cells = $_cells;
     }
 
+    public function __clone()
+    {
+        foreach($this->cells as $key => $cell)
+        {
+            $this->cells[$key] = clone $cell;
+        }
+    }
+
     public function getCells()
     {
         return $this->cells;
