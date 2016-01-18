@@ -42,9 +42,7 @@ for ($i = 0; $i<$numCells; $i++)
     $cellPositionX = stream_get_line(STDIN, 1024, PHP_EOL);
 
     $gameField->getCellByCoords($cellPositionY, $cellPositionX)->isAlive = 1;
-
 }
-
 
 $gameFieldController = new GameFieldController($gameField);
 
@@ -63,5 +61,3 @@ for ($numCycles = 0; $numCycles<$cycle; $numCycles++)
     echo "---------------------\n";
     $gameFieldController->run();
 }
-
-

@@ -19,7 +19,7 @@ class GameFieldController
 
     public function run()
     {
-        $currentGameField = unserialize(serialize($this->gameField));
+        $currentGameField = clone $this->gameField;
 
         foreach ($currentGameField->getCells() as $cell)
         {
