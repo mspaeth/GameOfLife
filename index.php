@@ -24,7 +24,7 @@ for($i=0; $i<$y; $i++)
     // Make rows
     for($j=0; $j<$x; $j++)
     {
-        $cell = new Cell($i,$j,0);
+        $cell = new Cell($j,$i,0);
         $cells[] = $cell;
     }
 }
@@ -36,12 +36,12 @@ $numCells = stream_get_line(STDIN, 1024, PHP_EOL);
 
 for ($i = 0; $i<$numCells; $i++)
 {
-    echo "Welche Position auf der Y-Achse soll die Zelle haben?\n";
-    $cellPositionY = stream_get_line(STDIN, 1024, PHP_EOL);
     echo "Welche Position auf der X-Achse soll die Zelle haben?\n";
     $cellPositionX = stream_get_line(STDIN, 1024, PHP_EOL);
+    echo "Welche Position auf der Y-Achse soll die Zelle haben?\n";
+    $cellPositionY = stream_get_line(STDIN, 1024, PHP_EOL);
 
-    $gameField->getCellByCoords($cellPositionY, $cellPositionX)->isAlive = 1;
+    $gameField->getCellByCoords($cellPositionX, $cellPositionY)->isAlive = 1;
 }
 
 $gameFieldController = new GameFieldController($gameField);
@@ -54,7 +54,7 @@ for ($numCycles = 0; $numCycles<$cycle; $numCycles++)
         // Make rows
         for($j=0; $j<$x; $j++)
         {
-            echo (string)$gameFieldController->getGameField()->getCellByCoords($i,$j)->isAlive;
+            echo (string)$gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive;
         }
         echo "\n";
     }
