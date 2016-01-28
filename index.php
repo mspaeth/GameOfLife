@@ -8,7 +8,9 @@
 require_once "lib/gamefieldcontroller.php";
 require_once "lib/cell.php";
 require_once "lib/gamefield.php";
+require_once "lib/output.php";
 require_once "lib/GifCreator.php";
+
 
 echo "Wieviele Spalten soll es Breit sein?\n";
 $x = stream_get_line(STDIN, 1024, PHP_EOL);
@@ -33,55 +35,66 @@ for($i=0; $i<$y; $i++)
 
 $gameField = new GameField($cells);
 
-echo "Wieviele lebende Zellen möchtest du setzen?";
-$numCells = stream_get_line(STDIN, 1024, PHP_EOL);
+echo "Bitte waehle:\n";
+echo "0 fuer Blinker";
+echo "1 fuer Gleiter";
+echo "2 fuer Light Weight Spaceship";
+echo "3 fuer eigene Zellen";
+$choosedChar = stream_get_line(STDIN, 1024, PHP_EOL);
 
-for ($i = 0; $i<$numCells; $i++)
+switch ($choosedChar)
 {
-    echo "Welche Position auf der X-Achse soll die Zelle haben?\n";
-    $cellPositionX = stream_get_line(STDIN, 1024, PHP_EOL);
-    echo "Welche Position auf der Y-Achse soll die Zelle haben?\n";
-    $cellPositionY = stream_get_line(STDIN, 1024, PHP_EOL);
+    case 0:
+        $gameField->getCellByCoords(3, 2)->isAlive = 1;
+        $gameField->getCellByCoords(3, 3)->isAlive = 1;
+        $gameField->getCellByCoords(3, 4)->isAlive = 1;
+        break;
 
-    $gameField->getCellByCoords($cellPositionX, $cellPositionY)->isAlive = 1;
+    case 1:
+        $gameField->getCellByCoords(2, 1)->isAlive = 1;
+        $gameField->getCellByCoords(3, 2)->isAlive = 1;
+        $gameField->getCellByCoords(3, 3)->isAlive = 1;
+        $gameField->getCellByCoords(2, 3)->isAlive = 1;
+        $gameField->getCellByCoords(1, 3)->isAlive = 1;
+        break;
+
+    case 2:
+        $gameField->getCellByCoords(1, 5)->isAlive = 1;
+        $gameField->getCellByCoords(2, 4)->isAlive = 1;
+        $gameField->getCellByCoords(3, 4)->isAlive = 1;
+        $gameField->getCellByCoords(4, 4)->isAlive = 1;
+        $gameField->getCellByCoords(5, 4)->isAlive = 1;
+        $gameField->getCellByCoords(5, 5)->isAlive = 1;
+        $gameField->getCellByCoords(5, 6)->isAlive = 1;
+        $gameField->getCellByCoords(4, 7)->isAlive = 1;
+        $gameField->getCellByCoords(1, 7)->isAlive = 1;
+        break;
+
+    case 3:
+        echo "Wieviele lebende Zellen möchtest du setzen?";
+        $numCells = stream_get_line(STDIN, 1024, PHP_EOL);
+
+        for ($i = 0; $i<$numCells; $i++)
+        {
+            echo "Welche Position auf der X-Achse soll die Zelle haben?\n";
+            $cellPositionX = stream_get_line(STDIN, 1024, PHP_EOL);
+            echo "Welche Position auf der Y-Achse soll die Zelle haben?\n";
+            $cellPositionY = stream_get_line(STDIN, 1024, PHP_EOL);
+            $gameField->getCellByCoords($cellPositionX, $cellPositionY)->isAlive = 1;
+        }
+        break;
+
+    default:
+        die("Wrong option");
+
 }
 
 $gameFieldController = new GameFieldController($gameField);
 
+echo "Bitte wähle 0 für Konsolenoutput\n";
+echo "Bitte wähle 1 für das Speichern jeder Runde als PNG\n";
+echo "Bitte wähle 2 für das Speichern als GIF Animation\n";
+$mode = stream_get_line(STDIN, 1024, PHP_EOL);
 
-$gif = new GifCreator(0, 2, array(-1, -1, -1));
-
-for ($numCycles = 0; $numCycles<$cycle; $numCycles++)
-{
-    $fieldPng = imagecreate($x*10,$y*10);
-    imagecolorallocate ($fieldPng, 243, 243, 243 );
-    imagesetthickness($fieldPng, 5);
-
-    // Make columns
-    for($i=0; $i<$y; $i++)
-    {
-        // Make rows
-        for($j=0; $j<$x; $j++)
-        {
-            //echo (string)$gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive;
-            if ($gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive == 1)
-            {
-                $x1 = $j*10-2;
-                $x2 = $x1+10-2;
-                $y1 = $i*10-2;
-                $y2 = $y1+10-2;
-
-                imagefilledrectangle($fieldPng , $x1 , $y1 , $x2 , $y2 , 25 );
-            }
-        }
-        echo "\n";
-    }
-    echo "---------------------\n";
-
-    imagepng($fieldPng,"testcyle".$numCycles.".png");
-    $gif->addFrame(file_get_contents("testcyle".$numCycles."png"), 200);
-    imagedestroy($fieldPng);
-    $gameFieldController->run();
-}
-
-file_put_contents("test.gif", $gif->getAnimation());
+$game = new output($x,$y,$gameFieldController);
+$game->runGame($cycle,$mode);
