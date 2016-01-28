@@ -11,11 +11,18 @@ class GameField
     /** @var  Cell[] */
     private $cells;
 
+    /**
+     * GameField constructor.
+     * @param $_cells cell[] Array which contains instances of cell.
+     */
     public function __construct($_cells)
     {
         $this->cells = $_cells;
     }
 
+    /**
+     * Necessary for deep cloning the gamefield.
+     */
     public function __clone()
     {
         foreach($this->cells as $key => $cell)
@@ -24,12 +31,23 @@ class GameField
         }
     }
 
+    /**
+     * Returns array of cells.
+     * @return Cell[]
+     */
     public function getCells()
     {
         return $this->cells;
     }
 
-    public function getCellByCoords($_y, $_x)
+    /**
+     * Searches for a cell with the given coordinates and returns it.
+     * If the cell doesn't exist, it returns null.
+     * @param $_y int Y coordinate of the cell.
+     * @param $_x int X coordinate of the cell.
+     * @return Cell|null
+     */
+    public function getCellByCoords($_x, $_y)
     {
         $cellByCord = NULL;
 
@@ -43,19 +61,24 @@ class GameField
         return $cellByCord;
     }
 
+    /**
+     * Calculates the neighbours of a given cell.
+     * @param Cell $cell The cell the neighbours should be calculated for.
+     * @return int Amount of neighbours.
+     */
     public function getNeighboursByCell(Cell $cell)
     {
         $y = $cell->getCoordY();
         $x = $cell->getCoordX();
         $neighbours = 0;
 
-        for($nX = $x-1; $nX<=$x+1; $nX++)
+        for($nY = $y-1; $nY<=$y+1; $nY++)
         {
-            for($nY = $y-1; $nY<=$y+1; $nY++)
+            for($nX = $x-1; $nX<=$x+1; $nX++)
             {
-                if ($this->getCellByCoords($nY,$nX) && !($nX == $x && $nY == $y))
+                if ($this->getCellByCoords($nX,$nY) && !($nX == $x && $nY == $y))
                 {
-                    if ($this->getCellByCoords($nY,$nX)->isAlive == 1) $neighbours++;
+                    if ($this->getCellByCoords($nX,$nY)->isAlive == 1) $neighbours++;
                 }
             }
         }
