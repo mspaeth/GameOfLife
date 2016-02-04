@@ -6,7 +6,6 @@
  * Time: 10:11
  */
 require_once "lib/gamefieldcontroller.php";
-require_once "lib/cell.php";
 require_once "lib/gamefield.php";
 require_once "lib/output.php";
 require_once "lib/GifCreator.php";
@@ -19,21 +18,10 @@ $y = stream_get_line(STDIN, 1024, PHP_EOL);
 echo "Wieviele Runden sollen gespielt werden?";
 $cycle = stream_get_line(STDIN, 1024, PHP_EOL);
 
-$cells = array();
-
-// Make columns
-for($i=0; $i<$y; $i++)
-{
-    // Make rows
-    for($j=0; $j<$x; $j++)
-    {
-        $cell = new Cell($j,$i,0);
-        $cells[] = $cell;
-    }
-}
 
 
-$gameField = new GameField($cells);
+
+$gameField = new GameField($x,$y);
 
 echo "Bitte waehle:\n";
 echo "0 fuer Blinker";

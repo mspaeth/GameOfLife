@@ -6,20 +6,40 @@
  * Date: 15.01.2016
  * Time: 12:02
  */
+require_once "cell.php";
+
 class GameField
 {
     /** @var  Cell[] */
     private $cells;
+    private $width;
+    private $height;
 
     /**
      * GameField constructor.
      * @param $_cells cell[] Array which contains instances of cell.
      */
-    public function __construct($_cells)
+    public function __construct($_width, $_height)
     {
-        $this->cells = $_cells;
+        $this->width = $_width;
+        $this->height = $_height;
+        $this->cells = array();
+        $this->createCells();
     }
 
+    private function createCells()
+    {
+        // Make columns
+        for($i=0; $i<$this->height; $i++)
+        {
+            // Make rows
+            for($j=0; $j<$this->width; $j++)
+            {
+                $cell = new Cell($j,$i,0);
+                $this->cells[] = $cell;
+            }
+        }
+    }
     /**
      * Necessary for deep cloning the gamefield.
      */
