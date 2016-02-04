@@ -10,6 +10,13 @@ function getUrlVars() {
     return vars;
 }
 
+function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
+}
 
 /////////////////////////////////////////////////////////////
 //Returns a cell by their given coords.
@@ -39,14 +46,17 @@ function calcNeighboursByCell(cellObj) {
 
     for (var k = 0; k<cells.length; k++)
     {
-        if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y"))-1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x")) == x && parseInt(cells[k].getAttribute("y"))-1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y"))-1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y")) == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y")) == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y"))+1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x")) == x && parseInt(cells[k].getAttribute("y"))+1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
-        if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y"))+1 == y) && cells[k].getAttribute("active") == "true") neighbours++;
+        if (cells[k].getAttribute("active") == "true")
+        {
+            if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y"))-1 == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x")) == x && parseInt(cells[k].getAttribute("y"))-1 == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y"))-1 == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y")) == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y")) == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x"))-1 == x && parseInt(cells[k].getAttribute("y"))+1 == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x")) == x && parseInt(cells[k].getAttribute("y"))+1 == y)) neighbours++;
+            if((parseInt(cells[k].getAttribute("x"))+1 == x && parseInt(cells[k].getAttribute("y"))+1 == y)) neighbours++;
+        }
     }
 
     return neighbours;
@@ -79,16 +89,16 @@ window.onload = function() {
     var gameField = document.getElementById("gameField");
 
     var cellsArray = [];
-    for(var i = 0; i<x; i++)
+    for(var i = 0; i<y; i++)
     {
         var row = gameField.insertRow(i);
-        for(var j = 0; j < y;j++)
+        for(var j = 0; j < x;j++)
         {
             var cell = row.insertCell(j);
-            cell.setAttribute('x', i.toString());
-            cell.setAttribute('y', j.toString());
+            cell.setAttribute('x', j.toString());
+            cell.setAttribute('y', i.toString());
             cell.setAttribute('active', 'false');
-            cellObj = new Cell(i,j,"false");
+            cellObj = new Cell(j,i,"false");
             cellsArray.push(cellObj);
         }
     }
@@ -137,28 +147,74 @@ window.onload = function() {
         }
     };
 
-
-    //TODO Runs the game with JS in the given gamefield! Neighbour calculation works, now do the main game logic and copy the object to the field!
+    /////////////////////////////////////////////////////////////
+    //Runs the game
     /////////////////////////////////////////////////////////////
     document.getElementById("runGameJs").onclick = function(){
-        var askForLoops = prompt("How many rounds you want to play? 0 = infinite till there isn't any life, but this can crash your browser!!");
+
+
 
         var cells = gameField.getElementsByTagName("td");
 
-        if (askForLoops == 0)
-        {}
-        else
-        {
-            for (var i=0; i < askForLoops; i++)
-            {
-                for (var k = 0; k < cellsArray.length; k++)
-                {
-                    var neighbours = calcNeighboursByCell(cellsArray[k]);
-                    console.log("Cell " + cellsArray[k].xCoord + "|" + cellsArray[k].yCoord + " has " + neighbours);
-                }
-            }
-        }
+        var interval = setInterval(function(){
+                    for (var k = 0; k < cellsArray.length; k++)
+                    {
+                        var tempFieldArray = JSON.parse(JSON.stringify(cellsArray));
+                        var neighbours = calcNeighboursByCell(tempFieldArray[k]);
+                        console.log("Round "+ i);
+                        console.log("Cell "+ tempFieldArray[k].xCoord + "|" + tempFieldArray[k].yCoord + "has " + neighbours + " neighbours! IsActive=" +tempFieldArray[k].isActive);
+
+                        if (tempFieldArray[k].isActive == "true")
+                        {
+                            if (neighbours < 2 || neighbours > 3)
+                            {
+                                cellsArray[k].isActive = "false";
+                                console.log("Cell will die!");
+                            }
+                            else if (neighbours == 2 || neighbours == 3)
+                            {
+                                console.log("Cell stays alive!");
+                            }
+                        }
+                        else if (tempFieldArray[k].isActive == "false")
+                        {
+                            if (neighbours == 3)
+                            {
+                                cellsArray[k].isActive = "true";
+                                console.log("Cell will live!");
+                            }
+                            else
+                            {
+                                console.log("Cell stays dead!");
+                            }
+                        }
+
+                        tempFieldArray.length = 0
+                    }
+                    console.log("----------------------------------------");
+
+                    for (var d = 0; d < cellsArray.length; d++)
+                    {
+                        cells[d].setAttribute("active", cellsArray[d].isActive);
+                        if (cells[d].getAttribute("active") == "true")
+                        {
+                            cells[d].style.backgroundColor = '#000000';
+                        }
+                        else if (cells[d].getAttribute("active") == "false")
+                        {
+                            cells[d].style.backgroundColor = '#FFFFFF';
+                        }
+                    }
+
+                    document.getElementById("stopGameJs").onclick = function(){
+                        clearInterval(interval);
+                    }
+
+        },1000);
+
     }
+
+
 };
 
 
