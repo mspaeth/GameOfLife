@@ -1,9 +1,23 @@
-#gameField td {
-    height: 15px;
-    width: 15px;
-    border: 1px solid black;
-    border-collapse: collapse;
-
+body {
+    background-color: black;
 }
 
+.container {
+    background-color: #bbbbbb;
+    padding: 25px;
+}
+
+#gameField {
+    float: left;
+    margin-right: 25px;
+}
+
+#gameField td {
+    height: 25px;
+    width: 25px;
+}
+
+li {
+    list-style: none;
+}
 

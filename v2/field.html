@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Conways game of life</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/main.css" rel="stylesheet" type="text/css">
+    <script language="javascript" type="text/javascript" src="js/randomColor.js"></script>
     <script language="javascript" type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-    <table id="gameField">
+<div class="container">
+
+    <table id="gameField" class="table-bordered">
         <tbody>
 
         </tbody>
     </table>
-    <button id="setRandomCells">Set random cells!</button>
-    <button id="runGameJs">Run game</button>
-    <button id="stopGameJs">Stop game</button>
+
+    <ul>
+        <li><button id="setRandomCells">Set random cells!</button></li>
+        <li><button id="runGameJs">Run game</button></li>
+        <li><button id="stopGameJs">Stop game</button></li>
+    </ul>
+</div>
 </body>
 </html>

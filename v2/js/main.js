@@ -10,29 +10,6 @@ function getUrlVars() {
     return vars;
 }
 
-function wait(ms){
-    var start = new Date().getTime();
-    var end = start;
-    while(end < start + ms) {
-        end = new Date().getTime();
-    }
-}
-
-/////////////////////////////////////////////////////////////
-//Returns a cell by their given coords.
-/////////////////////////////////////////////////////////////
-function getCellByCoords(cells, x, y) {
-
-    for(var k = 0; k<cells.length; k++)
-    {
-        if(cells[k].getAttribute("x") == x && cells[k].getAttribute("y") == y)
-        {
-            return cells[k];
-        }
-    }
-    return false;
-}
-
 /////////////////////////////////////////////////////////////
 //Calculates the amount of neighbours (active cells of a given cell.
 /////////////////////////////////////////////////////////////
@@ -98,6 +75,8 @@ window.onload = function() {
             cell.setAttribute('x', j.toString());
             cell.setAttribute('y', i.toString());
             cell.setAttribute('active', 'false');
+            cell.style.opacity = 1.0;
+            cell.style.backgroundColor = '#FFFFFF';
             cellObj = new Cell(j,i,"false");
             cellsArray.push(cellObj);
         }
@@ -116,7 +95,7 @@ window.onload = function() {
             if(this.getAttribute('active')=='false')
             {
                 this.setAttribute('active', 'true');
-                this.style.backgroundColor = '#000000';
+                this.style.backgroundColor = '#261283';
                 setCell(cellsArray, parseInt(this.getAttribute("x")), parseInt(this.getAttribute("y")), "true");
             }
             else
@@ -142,7 +121,8 @@ window.onload = function() {
             if (randNum <= 0.5)
             {
                 cells[k].setAttribute('active', 'true');
-                cells[k].style.backgroundColor = '#000000';
+              //  cells[k].style.backgroundColor = randomColor();
+                cells[k].style.backgroundColor = '#261283';
             }
         }
     };
@@ -151,8 +131,6 @@ window.onload = function() {
     //Runs the game
     /////////////////////////////////////////////////////////////
     document.getElementById("runGameJs").onclick = function(){
-
-
 
         var cells = gameField.getElementsByTagName("td");
 
@@ -171,10 +149,6 @@ window.onload = function() {
                                 cellsArray[k].isActive = "false";
                                 console.log("Cell will die!");
                             }
-                            else if (neighbours == 2 || neighbours == 3)
-                            {
-                                console.log("Cell stays alive!");
-                            }
                         }
                         else if (tempFieldArray[k].isActive == "false")
                         {
@@ -182,10 +156,6 @@ window.onload = function() {
                             {
                                 cellsArray[k].isActive = "true";
                                 console.log("Cell will live!");
-                            }
-                            else
-                            {
-                                console.log("Cell stays dead!");
                             }
                         }
 
@@ -195,14 +165,24 @@ window.onload = function() {
 
                     for (var d = 0; d < cellsArray.length; d++)
                     {
-                        cells[d].setAttribute("active", cellsArray[d].isActive);
-                        if (cells[d].getAttribute("active") == "true")
+                        if (cellsArray[d].isActive == "true")
                         {
-                            cells[d].style.backgroundColor = '#000000';
+                            if (cells[d].getAttribute("active") == "true")
+                            {
+                                    cells[d].style.opacity = cells[d].style.opacity-0.1;
+                            }
+                            else if (cells[d].getAttribute("active") == "false")
+                            {
+                                cells[d].setAttribute("active", cellsArray[d].isActive);
+                                cells[d].style.backgroundColor = '#261283';
+                                cells[d].style.opacity = 1.0;
+                            }
                         }
-                        else if (cells[d].getAttribute("active") == "false")
+                        else if (cellsArray[d].isActive == "false")
                         {
-                            cells[d].style.backgroundColor = '#FFFFFF';
+                            cells[d].setAttribute("active", cellsArray[d].isActive);
+                            cells[d].style.backgroundColor = "#FFFFFF";
+                            cells[d].style.opacity = 1.0;
                         }
                     }
 
