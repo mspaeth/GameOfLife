@@ -45,29 +45,29 @@ $choosedChar = stream_get_line(STDIN, 1024, PHP_EOL);
 switch ($choosedChar)
 {
     case 0:
-        $gameField->getCellByCoords(3, 2)->isAlive = 1;
-        $gameField->getCellByCoords(3, 3)->isAlive = 1;
-        $gameField->getCellByCoords(3, 4)->isAlive = 1;
+        $gameField->getCellByCoords(3, 2)->life();
+        $gameField->getCellByCoords(3, 3)->life();
+        $gameField->getCellByCoords(3, 4)->life();
         break;
 
     case 1:
-        $gameField->getCellByCoords(2, 1)->isAlive = 1;
-        $gameField->getCellByCoords(3, 2)->isAlive = 1;
-        $gameField->getCellByCoords(3, 3)->isAlive = 1;
-        $gameField->getCellByCoords(2, 3)->isAlive = 1;
-        $gameField->getCellByCoords(1, 3)->isAlive = 1;
+        $gameField->getCellByCoords(2, 1)->life();
+        $gameField->getCellByCoords(3, 2)->life();
+        $gameField->getCellByCoords(3, 3)->life();
+        $gameField->getCellByCoords(2, 3)->life();
+        $gameField->getCellByCoords(1, 3)->life();
         break;
 
     case 2:
-        $gameField->getCellByCoords(1, 5)->isAlive = 1;
-        $gameField->getCellByCoords(2, 4)->isAlive = 1;
-        $gameField->getCellByCoords(3, 4)->isAlive = 1;
-        $gameField->getCellByCoords(4, 4)->isAlive = 1;
-        $gameField->getCellByCoords(5, 4)->isAlive = 1;
-        $gameField->getCellByCoords(5, 5)->isAlive = 1;
-        $gameField->getCellByCoords(5, 6)->isAlive = 1;
-        $gameField->getCellByCoords(4, 7)->isAlive = 1;
-        $gameField->getCellByCoords(1, 7)->isAlive = 1;
+        $gameField->getCellByCoords(1, 5)->life();
+        $gameField->getCellByCoords(2, 4)->life();
+        $gameField->getCellByCoords(3, 4)->life();
+        $gameField->getCellByCoords(4, 4)->life();
+        $gameField->getCellByCoords(5, 4)->life();
+        $gameField->getCellByCoords(5, 5)->life();
+        $gameField->getCellByCoords(5, 6)->life();
+        $gameField->getCellByCoords(4, 7)->life();
+        $gameField->getCellByCoords(1, 7)->life();
         break;
 
     case 3:
@@ -80,7 +80,7 @@ switch ($choosedChar)
             $cellPositionX = stream_get_line(STDIN, 1024, PHP_EOL);
             echo "Welche Position auf der Y-Achse soll die Zelle haben?\n";
             $cellPositionY = stream_get_line(STDIN, 1024, PHP_EOL);
-            $gameField->getCellByCoords($cellPositionX, $cellPositionY)->isAlive = 1;
+            $gameField->getCellByCoords($cellPositionX, $cellPositionY)->life();
         }
         break;
 

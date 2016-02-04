@@ -78,7 +78,7 @@ class GameField
             {
                 if ($this->getCellByCoords($nX,$nY) && !($nX == $x && $nY == $y))
                 {
-                    if ($this->getCellByCoords($nX,$nY)->isAlive == 1) $neighbours++;
+                    if ($this->getCellByCoords($nX,$nY)->isAlive()) $neighbours++;
                 }
             }
         }

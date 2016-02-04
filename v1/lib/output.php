@@ -47,7 +47,11 @@ class output
                 // Make rows
                 for($j=0; $j<$this->x; $j++)
                 {
-                    if($mode==0) echo (string)$this->gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive;
+                    if($mode==0)
+                    {
+                        if ($this->gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive()) echo "1";
+                        else echo "0";
+                    }
                     if(($mode==1 || $mode==2) && $this->gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive == 1)
                     {
                         $x1 = $j*10-2;

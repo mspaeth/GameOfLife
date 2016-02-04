@@ -35,14 +35,14 @@ class GameFieldController
         foreach ($currentGameField->getCells() as $cell)
         {
             $neighbours = $currentGameField->getNeighboursByCell($cell);
-            if ($cell->isAlive == 0)
+            if (!$cell->isAlive())
             {
-                if($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=1;
+                if($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->life();
             }
-            if ($cell->isAlive == 1)
+            if ($cell->isAlive())
             {
-                if($neighbours == 2 || $neighbours == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=1;
-                else $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=0;
+                if($neighbours == 2 || $neighbours == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->life();
+                else $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->dead();
             }
         }
         return true;

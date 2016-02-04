@@ -13,13 +13,13 @@ class Cell
     private $y;
     private $x;
 
-    public $isAlive;
+    private $isAlive;
 
     /**
      * Cell constructor.
      * @param $_y int Y coord of the cell.
      * @param $_x int X coord of the cell.
-     * @param $_isAlive int Returns 1 if cell is alive, 0 if cell is dead.
+     * @param $_isAlive int Returns true if cell is alive, false if cell is dead.
      */
     public function __construct($_x, $_y, $_isAlive)
     {
@@ -44,5 +44,20 @@ class Cell
     public function getCoordX()
     {
         return $this->x;
+    }
+
+    public function life()
+    {
+        $this->isAlive = true;
+    }
+
+    public function dead()
+    {
+        $this->isAlive = false;
+    }
+
+    public function isAlive()
+    {
+        return $this->isAlive;
     }
 }
