@@ -6,12 +6,16 @@
  * @author Max Späth <max.spaeth@cn-consult.eu>
  */
 
+/**
+ * This class does the game logic and sets the cells dead or alive in the gamefield.
+ */
 class GameFieldController
 {
     private $gameField;
 
     /**
      * GameFieldController constructor.
+     * 
      * @param $_gameField gameField An instance of the gameField class.
      */
     public function __construct($_gameField)
@@ -21,7 +25,8 @@ class GameFieldController
 
     /**
      * This function does the main game logic.
-     * It calcualtes the amount of neighbours for each cell, and depending on the game rules sets the cell alive or dead.
+     * It calculates the amount of neighbours for each cell, and depending on the game rules sets the cell alive or dead.
+     *
      * @return bool
      */
     public function run()
@@ -46,7 +51,8 @@ class GameFieldController
 
     /**
      * Returns the gameField.
-     * @return gameField
+     *
+     * @return gameField The gamefield
      */
     public function getGameField()
     {

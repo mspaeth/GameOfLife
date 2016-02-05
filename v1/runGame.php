@@ -26,58 +26,62 @@ $options->parse();
 
 
 if ($options->getOption('w')) $x = $options->getOption('h');
-else die("Argument --width is missing");
+else echo "Argument --width is missing\n";
 
 if ($options->getOption('h')) $y = $options->getOption('h');
-else die("Argument --height is missing");
+else echo "Argument --height is missing\n";
 
-$gameField = new GameField($x,$y);
+if (isset($x) && isset($y))
+{
+    $gameField = new GameField($x,$y);
 
-if($options->getOption('t')) {
-    switch ($options->getOption('t'))
-    {
-        case "blinker":
-            $gameField->getCellByCoords(3, 2)->life();
-            $gameField->getCellByCoords(3, 3)->life();
-            $gameField->getCellByCoords(3, 4)->life();
-            break;
-
-        case "glider":
-            $gameField->getCellByCoords(2, 1)->life();
-            $gameField->getCellByCoords(3, 2)->life();
-            $gameField->getCellByCoords(3, 3)->life();
-            $gameField->getCellByCoords(2, 3)->life();
-            $gameField->getCellByCoords(1, 3)->life();
-            break;
-
-        case "lws":
-            $gameField->getCellByCoords(1, 5)->life();
-            $gameField->getCellByCoords(2, 4)->life();
-            $gameField->getCellByCoords(3, 4)->life();
-            $gameField->getCellByCoords(4, 4)->life();
-            $gameField->getCellByCoords(5, 4)->life();
-            $gameField->getCellByCoords(5, 5)->life();
-            $gameField->getCellByCoords(5, 6)->life();
-            $gameField->getCellByCoords(4, 7)->life();
-            $gameField->getCellByCoords(1, 7)->life();
-            break;
-
-        default:
-            die("Wrong type!");
-    }
-
-    if($options->getOption('o'))
-    {
-        if($options->getOption('c'))
+    if($options->getOption('t')) {
+        switch ($options->getOption('t'))
         {
-            $numCycles = $options->getOption('c');
+            case "blinker":
+                $gameField->getCellByCoords(3, 2)->life();
+                $gameField->getCellByCoords(3, 3)->life();
+                $gameField->getCellByCoords(3, 4)->life();
+                break;
 
-            $gameFieldController = new GameFieldController($gameField);
-            $output = new ConsoleOutput();
-            $output->output($gameFieldController, $numCycles);
+            case "glider":
+                $gameField->getCellByCoords(2, 1)->life();
+                $gameField->getCellByCoords(3, 2)->life();
+                $gameField->getCellByCoords(3, 3)->life();
+                $gameField->getCellByCoords(2, 3)->life();
+                $gameField->getCellByCoords(1, 3)->life();
+                break;
+
+            case "lws":
+                $gameField->getCellByCoords(1, 5)->life();
+                $gameField->getCellByCoords(2, 4)->life();
+                $gameField->getCellByCoords(3, 4)->life();
+                $gameField->getCellByCoords(4, 4)->life();
+                $gameField->getCellByCoords(5, 4)->life();
+                $gameField->getCellByCoords(5, 5)->life();
+                $gameField->getCellByCoords(5, 6)->life();
+                $gameField->getCellByCoords(4, 7)->life();
+                $gameField->getCellByCoords(1, 7)->life();
+                break;
+
+            default:
+                echo "Wrong type!\n";
         }
-        else die("Missing --numCycles argument");
+
+        if($options->getOption('o'))
+        {
+            if($options->getOption('c'))
+            {
+                $numCycles = $options->getOption('c');
+
+                $gameFieldController = new GameFieldController($gameField);
+                $output = new ConsoleOutput();
+                $output->output($gameFieldController, $numCycles);
+            }
+            else echo "Missing --numCycles argument\n";
+        }
+        else echo "Missing --output argument\n";
     }
-    else die("Missing --output argument");
+    else echo "Missing --type argument\n";
 }
-else die("Missing --type argument");
+
