@@ -1,13 +1,17 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 15.01.2016
- * Time: 12:02
+ * @file
+ * @version 2.8
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
  */
+
 require_once "cell.php";
 
+/**
+ * This class is the gamefield which contains an array of cells.
+ */
 class GameField
 {
     /** @var  Cell[] */
@@ -17,7 +21,9 @@ class GameField
 
     /**
      * GameField constructor.
-     * @param $_cells cell[] Array which contains instances of cell.
+     *
+     * @param int $_width Width of the gamefield (x-axis)
+     * @param int $_height Height of the gamefield (y-axis)
      */
     public function __construct($_width, $_height)
     {
@@ -28,18 +34,15 @@ class GameField
     }
 
     /**
-     * Private function which creates the array of cells which are the gamefield.
+     * Creates the array of cells which is the gamefield.
      */
     private function createCells()
     {
-        // Make columns
-        for($i=0; $i<$this->height; $i++)
-        {
-            // Make rows
-            for($j=0; $j<$this->width; $j++)
-            {
-                $cell = new Cell($j,$i,0);
-                $this->cells[] = $cell;
+        for ($i=0; $i<$this->height; $i++)
+        { // Create columns
+            for ($j=0; $j<$this->width; $j++)
+            { // Create rows
+                $this->cells[] = new Cell($j,$i,0);
             }
         }
     }
@@ -109,11 +112,19 @@ class GameField
         return $neighbours;
     }
 
+    /**
+     * Returns the length of the y-axis of the gamefield.
+     * @return int Height of the gamefield.
+     */
     public function getHeight()
     {
         return $this->height;
     }
 
+    /**
+     * Returns the length of the x-axis of the gamefield.
+     * @return int Width of the gamefield.
+     */
     public function getWidth()
     {
         return $this->width;
