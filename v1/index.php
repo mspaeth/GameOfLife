@@ -9,6 +9,7 @@ require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
 require_once "lib/output.php";
 require_once "lib/GifCreator.php";
+require __DIR__ . '../vendor/autoload.php';
 
 
 echo "Wieviele Spalten soll es Breit sein?\n";
@@ -17,8 +18,6 @@ echo "Wieviele Zeilen soll das Feld hoch sein?\n";
 $y = stream_get_line(STDIN, 1024, PHP_EOL);
 echo "Wieviele Runden sollen gespielt werden?";
 $cycle = stream_get_line(STDIN, 1024, PHP_EOL);
-
-
 
 
 $gameField = new GameField($x,$y);
@@ -74,7 +73,6 @@ switch ($choosedChar)
 
     default:
         die("Wrong option");
-
 }
 
 $gameFieldController = new GameFieldController($gameField);

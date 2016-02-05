@@ -27,6 +27,9 @@ class GameField
         $this->createCells();
     }
 
+    /**
+     * Private function which creates the array of cells which are the gamefield.
+     */
     private function createCells()
     {
         // Make columns
@@ -104,5 +107,15 @@ class GameField
         }
 
         return $neighbours;
+    }
+
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function getWidth()
+    {
+        return $this->width;
     }
 }
