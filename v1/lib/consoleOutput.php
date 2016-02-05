@@ -6,7 +6,7 @@
  * Date: 05.02.2016
  * Time: 09:57
  */
-require_once 'baseOutput.php';
+require_once 'baseoutput.php';
 
 class ConsoleOutput extends BaseOutput
 {
