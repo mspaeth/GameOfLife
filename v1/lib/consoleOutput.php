@@ -10,14 +10,14 @@ require_once 'baseOutput.php';
 
 class ConsoleOutput extends BaseOutput
 {
-    public function output(GameFieldController $_gameFieldController, $_cycle)
+    public function output(GameFieldController $_gameFieldController, $_numCycles)
     {
-        $cycle = $_cycle;
+        $numCycles = $_numCycles;
         $gameFieldController = $_gameFieldController;
         $x = $gameFieldController->getGameField()->getWidth();
         $y = $gameFieldController->getGameField()->getHeight();
 
-        for ($numCycles = 0; $numCycles<$cycle; $numCycles++)
+        for ($cycle = 0; $cycle<$numCycles; $cycle++)
         {
             // Make columns
             for($i=0; $i<$y; $i++)
