@@ -25,10 +25,6 @@ $options = new Getopt(array(
 
 $options->parse();
 
-
-
-
-
 if ($options->getOption('width')) $x = $options->getOption('h');
 else echo "Argument --width is missing\n";
 
