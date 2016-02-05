@@ -1,15 +1,27 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 05.02.2016
- * Time: 09:57
+ * @file
+ * @version 2.8
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
  */
+
 require_once 'baseoutput.php';
 
+/**
+ * This class implements the output function from BaseOutput and prints the gamefield every cycle
+ * to the console.
+ */
 class ConsoleOutput extends BaseOutput
 {
+    /**
+     * This function is extended from the baseoutput class.
+     * It prints the gamefield to the console for the number of cycles given.
+     *
+     * @param GameFieldController $_gameFieldController Object of gamefieldcontroller.
+     * @param int $_numCycles Amount of rounds the game should be played.
+     */
     public function output(GameFieldController $_gameFieldController, $_numCycles)
     {
         $numCycles = $_numCycles;

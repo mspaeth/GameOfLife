@@ -15,11 +15,10 @@ abstract class BaseOutput
 {
     /**
      * This function needs to be implemented in every plugin which extends from this class
-     * It has the necessary parameters to output the gamefield.
+     * It gets the necessary parameters to output the gamefield.
      *
      * @param GameFieldController $_gameFieldController The gamefieldcontroller which contains the gamefield.
      * @param int $_numCycles The amount of rounds the game should be played.
-     * @return mixed Outputs the gamefield.
      */
     abstract public function output(GameFieldController $_gameFieldController, $_numCycles);
 }
