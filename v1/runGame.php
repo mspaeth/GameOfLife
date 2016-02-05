@@ -9,34 +9,39 @@
 require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
 require_once "lib/consoleOutput.php";
-require "lib/external/vendor/autoload.php";
-
+include_once("lib/external/vendor/autoload.php");
 
 
 use Ulrichsg\Getopt;
-$options = new Getopt\Getoptv2(array(
-            new Getopt\Option('o','output',Getopt\Getoptv2::REQUIRED_ARGUMENT),
-            new Getopt\Option('w','width',Getopt\Getoptv2::REQUIRED_ARGUMENT),
-            new Getopt\Option('h','height',Getopt\Getoptv2::REQUIRED_ARGUMENT),
-            new Getopt\Option('c','numCycles',Getopt\Getoptv2::REQUIRED_ARGUMENT),
-            new Getopt\Option('t','type',Getopt\Getoptv2::REQUIRED_ARGUMENT)
+$options = new Getopt(array(
+            array('o','output',Getopt::REQUIRED_ARGUMENT,'Output in console, as png or gif'),
+            array('w','width',Getopt::REQUIRED_ARGUMENT,'Length of x-axis of the gamefield 1-*'),
+            array('h','height',Getopt::REQUIRED_ARGUMENT,'Length of the y-axis of the gamefield 1-*'),
+            array('c','numCycles',Getopt::REQUIRED_ARGUMENT, 'Number of rounds the game should play 1-*'),
+            array('t','type',Getopt::REQUIRED_ARGUMENT, 'Figure that should be set, blinker, glider, or lws'),
+            array('H', 'help', Getopt::NO_ARGUMENT)
+
 ));
 
 $options->parse();
 
 
-if ($options->getOption('w')) $x = $options->getOption('h');
+
+
+
+if ($options->getOption('width')) $x = $options->getOption('h');
 else echo "Argument --width is missing\n";
 
-if ($options->getOption('h')) $y = $options->getOption('h');
+if ($options->getOption('height')) $y = $options->getOption('h');
 else echo "Argument --height is missing\n";
 
 if (isset($x) && isset($y))
 {
     $gameField = new GameField($x,$y);
 
-    if($options->getOption('t')) {
-        switch ($options->getOption('t'))
+    if($options->getOption('type')) {
+
+        switch ($options->getOption('type'))
         {
             case "blinker":
                 $gameField->getCellByCoords(3, 2)->life();
@@ -68,11 +73,11 @@ if (isset($x) && isset($y))
                 echo "Wrong type!\n";
         }
 
-        if($options->getOption('o'))
+        if($options->getOption('output'))
         {
-            if($options->getOption('c'))
+            if($options->getOption('numCycles'))
             {
-                $numCycles = $options->getOption('c');
+                $numCycles = $options->getOption('numCycles');
 
                 $gameFieldController = new GameFieldController($gameField);
                 $output = new ConsoleOutput();
@@ -85,3 +90,7 @@ if (isset($x) && isset($y))
     else echo "Missing --type argument\n";
 }
 
+if($options->getOption('help'))
+{
+    $options->showHelp();
+}
