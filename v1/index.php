@@ -9,7 +9,7 @@ require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
 require_once "lib/output.php";
 require_once "lib/GifCreator.php";
-require __DIR__ . '../vendor/autoload.php';
+require __DIR__ . "lib/external/vendor/autoload.php";
 
 
 echo "Wieviele Spalten soll es Breit sein?\n";

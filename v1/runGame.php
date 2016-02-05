@@ -11,7 +11,7 @@ require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
 require_once "lib/consoleOutput.php";
 
-require '../vendor/autoload.php';
+require "lib/external/vendor/autoload.php";
 
 
 
