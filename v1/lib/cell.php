@@ -1,12 +1,15 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 15.01.2016
- * Time: 12:01
- *
- * Class of a single cell of the the gamefield!
+ * @file
+ * @version 2.8
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
+ */
+
+/**
+ * This class is a cell object, every instance of this class is one cell
+ * which is used in an array to create together the gamefield.
  */
 class Cell
 {
@@ -16,10 +19,11 @@ class Cell
     private $isAlive;
 
     /**
-     * Cell constructor.
+     * Constructs the cell and sets the necessary member variables.
+     *
      * @param $_y int Y coord of the cell.
      * @param $_x int X coord of the cell.
-     * @param $_isAlive int Returns true if cell is alive, false if cell is dead.
+     * @param $_isAlive bool True if cell is alive, false if cell is dead.
      */
     public function __construct($_x, $_y, $_isAlive)
     {
@@ -30,6 +34,7 @@ class Cell
 
     /**
      * Returns the Y coordinate of the cell.
+     *
      * @return int Y coordinate of cell.
      */
     public function getCoordY()
@@ -39,6 +44,7 @@ class Cell
 
     /**
      * Returns the X coordinate of the cell.
+     *
      * @return int X coordinate of the cell.
      */
     public function getCoordX()
@@ -46,16 +52,27 @@ class Cell
         return $this->x;
     }
 
+    /**
+     * Sets cell alive.
+     */
     public function life()
     {
         $this->isAlive = true;
     }
 
+    /**
+     * Sets cell dead.
+     */
     public function dead()
     {
         $this->isAlive = false;
     }
 
+    /**
+     * Returns if the cell is alive or dead.
+     *
+     * @return bool Returns true if cell is alive, false if cell is dead.
+     */
     public function isAlive()
     {
         return $this->isAlive;
