@@ -1,14 +1,10 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 15.01.2016
- * Time: 12:01
- *
- * This class controlls the gamefield and does the main game logic.
+ * @file
+ * @version 2.8
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
  */
-
 
 class GameFieldController
 {

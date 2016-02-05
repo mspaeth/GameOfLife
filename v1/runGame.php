@@ -1,16 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 05.02.2016
- * Time: 10:26
+ * @file
+ * @version 2.8
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
  */
-
 
 require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
 require_once "lib/consoleOutput.php";
-
 require "lib/external/vendor/autoload.php";
 
 
