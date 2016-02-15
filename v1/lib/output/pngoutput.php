@@ -10,11 +10,14 @@
 require_once __DIR__."/../pngcreator.php";
 require_once __DIR__."/../baseoutput.php";
 
+/**
+ * This class inherits from the BaseOutput class, so we need to implement the output() function here, which will save the gamefield every cylce as png file.
+ */
 class PngOutput extends BaseOutput
 {
     /**
-     * This function needs to be implemented in every plugin which extends from this class.
-     * It gets the necessary parameters to output the gamefield.
+     * This function is extended from the baseoutput class.
+     * It creates and saves the gamefield each cycle as png file to /v1/tmp/png.
      *
      * @param GameFieldController $_gameFieldController The gamefieldcontroller which contains the gamefield.
      * @param int $_numCycles The amount of rounds the game should be played.
@@ -23,6 +26,10 @@ class PngOutput extends BaseOutput
     {
         $pngCreator = new PngCreator;
 
-        $pngCreator->createPng($_gameFieldController, $_numCycles);
+        for ($cycle = 0; $cycle<$_numCycles; $cycle++)
+        { // Amount of cycles
+            $pngCreator->createPng($_gameFieldController->getGameField(),$cycle);
+            $_gameFieldController->run();
+        }
     }
 }
