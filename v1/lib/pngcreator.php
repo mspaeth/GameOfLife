@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * @version 0.1
@@ -6,21 +7,17 @@
  * @author Max Späth <max.spaeth@cn-consult.eu>
  */
 
-require_once __DIR__.'/../baseoutput.php';
-
 /**
- * This class inherits from the BaseOutput class, so we need to implement the output() function here, which will print every game cycle the complete gamefield on a console.
+ * This class creates and saves the gamefield each round as a png file.
  */
-class ConsoleOutput extends BaseOutput
+class pngCreator
 {
     /**
-     * This function is extended from the baseoutput class.
-     * It prints the gamefield to the console for the number of cycles given.
-     *
+     * Creates the png and saves it to lib/output/png.
      * @param GameFieldController $_gameFieldController The GameFieldController for calculating alive states of all cells for each round.
      * @param int $_numCycles Amount of rounds the game should be played.
      */
-    public function output(GameFieldController $_gameFieldController, $_numCycles)
+    public function createPng($_gameFieldController, $_numCycles)
     {
         $numCycles = $_numCycles;
         $gameFieldController = $_gameFieldController;
@@ -29,17 +26,23 @@ class ConsoleOutput extends BaseOutput
 
         for ($cycle = 0; $cycle<$numCycles; $cycle++)
         { // Amount of cycles
+            $fieldPng = imagecreate($x*10,$y*10);
+            imagecolorallocate($fieldPng, 243, 243, 243);
+            imagesetthickness($fieldPng, 5);
+            
             for($i=0; $i<$y; $i++)
             { // Make columns
                 for($j=0; $j<$x; $j++)
                 { // Make rows
-                    if ($gameFieldController->getGameField()->getCellByCoords($j,$i)->isAlive()) echo "1";
-                    else echo "0";
+                    $x1 = $j*10-2;
+                    $x2 = $x1+10-2;
+                    $y1 = $i*10-2;
+                    $y2 = $y1+10-2;
+                    imagefilledrectangle($fieldPng , $x1 , $y1 , $x2 , $y2 , 25 );
                 }
-                echo "\n";
             }
-            echo "---------------------\n";
-
+            imagepng($fieldPng,__DIR__."/png/cycle".$numCycles.".png");
+            imagedestroy($fieldPng);
             $gameFieldController->run();
         }
     }
