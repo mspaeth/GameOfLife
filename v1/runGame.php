@@ -11,83 +11,39 @@ require_once "lib/gamefield.php";
 include_once("lib/external/vendor/autoload.php");
 
 foreach (glob('lib/output/*.php') as $file) include( $file );
+foreach (glob('lib/input/*.php') as $file) include( $file );
 
 use Ulrichsg\Getopt;
 $options = new Getopt(array(
-            array('o','output',Getopt::REQUIRED_ARGUMENT,'Output in console, as png or gif'),
-            array('w','width',Getopt::REQUIRED_ARGUMENT,'Length of x-axis of the gamefield 1-*'),
-            array('h','height',Getopt::REQUIRED_ARGUMENT,'Length of the y-axis of the gamefield 1-*'),
-            array('c','numCycles',Getopt::REQUIRED_ARGUMENT, 'Number of rounds the game should play 1-*'),
-            array('t','type',Getopt::REQUIRED_ARGUMENT, 'Figure that should be set, blinker, glider, or lws'),
-            array('H', 'help', Getopt::NO_ARGUMENT)
+    array('i','input',Getopt::REQUIRED_ARGUMENT,'Input type (for now only txt is implemented'),
+    array('f','filepath',Getopt::OPTIONAL_ARGUMENT,'Path to txt file(only required if txt is choosen as input'),
+    array('o','output',Getopt::REQUIRED_ARGUMENT,'Output in console, as png or gif'),
+    array('c','numCycles',Getopt::REQUIRED_ARGUMENT, 'Number of rounds the game should play 1-*'),
+    array('H', 'help', Getopt::NO_ARGUMENT)
 
 ));
 
 $options->parse();
 
-if ($options->getOption('width')) $x = $options->getOption('h');
-else echo "Argument --width is missing\n";
-
-if ($options->getOption('height')) $y = $options->getOption('h');
-else echo "Argument --height is missing\n";
-
-if (isset($x) && isset($y))
+if ($options->getOption('input'))
 {
-    $gameField = new GameField($x,$y);
+    if ($options->getOption("filepath")) $config = array('filePath' => $options->getOption('filepath'));
+    $inputClass = $options->getOption("input")."Input";
+    $input = new $inputClass($config);
 
-    if($options->getOption('type')) {
+    if ($options->getOption("output"))
+    {
+        $outputClass = $options->getOption("output")."Output";
+        $numCycles = $options->getOption('numCycles');
 
-        switch ($options->getOption('type'))
+        if ($options->getOption("numCycles"))
         {
-            case "blinker":
-                $gameField->getCellByCoords(3, 2)->life();
-                $gameField->getCellByCoords(3, 3)->life();
-                $gameField->getCellByCoords(3, 4)->life();
-                break;
-
-            case "glider":
-                $gameField->getCellByCoords(2, 1)->life();
-                $gameField->getCellByCoords(3, 2)->life();
-                $gameField->getCellByCoords(3, 3)->life();
-                $gameField->getCellByCoords(2, 3)->life();
-                $gameField->getCellByCoords(1, 3)->life();
-                break;
-
-            case "lws":
-                $gameField->getCellByCoords(1, 5)->life();
-                $gameField->getCellByCoords(2, 4)->life();
-                $gameField->getCellByCoords(3, 4)->life();
-                $gameField->getCellByCoords(4, 4)->life();
-                $gameField->getCellByCoords(5, 4)->life();
-                $gameField->getCellByCoords(5, 5)->life();
-                $gameField->getCellByCoords(5, 6)->life();
-                $gameField->getCellByCoords(4, 7)->life();
-                $gameField->getCellByCoords(1, 7)->life();
-                break;
-
-            default:
-                echo "Wrong type!\n";
+            $gameFieldController = new GameFieldController($input->getGameField());
+            $output = new $outputClass();
+            $output->output($gameFieldController, $numCycles);
         }
-
-        if($options->getOption('output'))
-        {
-            $outputClass = $options->getOption("output")."Output";
-            if($options->getOption('numCycles'))
-            {
-                $numCycles = $options->getOption('numCycles');
-
-                $gameFieldController = new GameFieldController($gameField);
-                $output = new $outputClass();
-                $output->output($gameFieldController, $numCycles);
-            }
-            else echo "Missing --numCycles argument\n";
-        }
-        else echo "Missing --output argument\n";
+        else die("Please specify a number of cycles the game should be played");
     }
-    else echo "Missing --type argument\n";
+    else die("Please specify an output mode");
 }
-
-if($options->getOption('help'))
-{
-    $options->showHelp();
-}
+else die("Wrong input");
