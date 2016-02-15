@@ -27,7 +27,7 @@ class PngOutput extends BaseOutput
         $pngCreator = new PngCreator;
 
         for ($cycle = 0; $cycle<$_numCycles; $cycle++)
-        { // Amount of cycles
+        { // Creates a png for each cycle.
             $pngCreator->createPng($_gameFieldController->getGameField(),$cycle);
             $_gameFieldController->run();
         }

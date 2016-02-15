@@ -13,27 +13,26 @@
 class pngCreator
 {
     /**
-     * Creates the png and saves it to lib/output/png.
+     * Creates the png and saves it to v1/tmp/png.
      *
-     * @param GameField $_gameField The GameField for retrieving alive states of all cells for each round.
-     * @param int $_cycle The current game cycle which is saved.
+     * @param GameField $_gameField The GameField for retrieving alive states of all cells.
+     * @param int $_cycle The number of current cycle for naming the png file.
      */
     public function createPng($_gameField, $_cycle)
     {
-        $gameField = $_gameField;
-        $x = $gameField->getWidth();
-        $y = $gameField->getHeight();
+        $x = $_gameField->getWidth();
+        $y = $_gameField->getHeight();
 
         $fieldPng = imagecreate($x*10,$y*10);
         imagecolorallocate($fieldPng, 243, 243, 243);
         imagesetthickness($fieldPng, 5);
 
-        for($i=0; $i<$y; $i++)
-        { // Make columns
-            for($j=0; $j<$x; $j++)
-            { // Make rows
-                if($gameField->getCellByCoords($j,$i)->isAlive() == true)
-                {
+        for ($i=0; $i<$y; $i++)
+        { // Draw rows
+            for ($j=0; $j<$x; $j++)
+            { // Draw columns
+                if($_gameField->getCellByCoords($j,$i)->isAlive() == true)
+                { // Draw a black rectangle it the cell is alive
                     $x1 = $j * 10 - 2;
                     $x2 = $x1 + 10 - 2;
                     $y1 = $i * 10 - 2;
