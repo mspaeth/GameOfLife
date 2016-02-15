@@ -21,8 +21,8 @@ class GameField
     /**
      * GameField constructor.
      *
-     * @param int $_width Width of the gamefield (x-axis)
-     * @param int $_height Height of the gamefield (y-axis)
+     * @param int $_width Width of the gamefield (x-axis).
+     * @param int $_height Height of the gamefield (y-axis).
      */
     public function __construct($_width, $_height)
     {
@@ -33,7 +33,7 @@ class GameField
     }
 
     /**
-     * Creates the array of cells
+     * Creates the array of cells.
      */
     private function createCells()
     {

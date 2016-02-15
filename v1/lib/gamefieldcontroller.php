@@ -52,7 +52,7 @@ class GameFieldController
     /**
      * Returns the gameField.
      *
-     * @return gameField The gamefield
+     * @return gameField The gamefield.
      */
     public function getGameField()
     {

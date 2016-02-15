@@ -17,7 +17,7 @@ class ConsoleOutput extends BaseOutput
      * This function is extended from the baseoutput class.
      * It prints the gamefield to the console for the number of cycles given.
      *
-     * @param GameFieldController $_gameFieldController Calculates the position of the cells each round.
+     * @param GameFieldController $_gameFieldController The GameFieldController for calculating alive states of all cells for each round.
      * @param int $_numCycles Amount of rounds the game should be played.
      */
     public function output(GameFieldController $_gameFieldController, $_numCycles)
