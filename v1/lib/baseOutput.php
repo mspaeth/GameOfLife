@@ -13,7 +13,7 @@
 abstract class BaseOutput
 {
     /**
-     * This function needs to be implemented in every plugin which extends from this class
+     * This function needs to be implemented in every plugin which extends from this class.
      * It gets the necessary parameters to output the gamefield.
      *
      * @param GameFieldController $_gameFieldController The gamefieldcontroller which contains the gamefield.

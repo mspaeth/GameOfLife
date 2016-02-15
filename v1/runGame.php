@@ -8,9 +8,9 @@
 
 require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
-require_once "lib/consoleoutput.php";
 include_once("lib/external/vendor/autoload.php");
 
+foreach (glob('lib/output/*.php') as $file) include( $file );
 
 use Ulrichsg\Getopt;
 $options = new Getopt(array(
@@ -71,12 +71,13 @@ if (isset($x) && isset($y))
 
         if($options->getOption('output'))
         {
+            $outputClass = $options->getOption("output")."Output";
             if($options->getOption('numCycles'))
             {
                 $numCycles = $options->getOption('numCycles');
 
                 $gameFieldController = new GameFieldController($gameField);
-                $output = new ConsoleOutput();
+                $output = new $outputClass();
                 $output->output($gameFieldController, $numCycles);
             }
             else echo "Missing --numCycles argument\n";

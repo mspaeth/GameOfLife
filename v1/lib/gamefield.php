@@ -33,7 +33,7 @@ class GameField
     }
 
     /**
-     * Creates the array of cells which is the gamefield.
+     * Creates the array of cells
      */
     private function createCells()
     {

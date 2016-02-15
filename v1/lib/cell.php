@@ -7,8 +7,7 @@
  */
 
 /**
- * This class is a cell object, every instance of this class is one cell
- * which is used in an array to create together the gamefield.
+ * This class represents a cell oject, which contains the information about whether it is dead or alive.
  */
 class Cell
 {
@@ -52,7 +51,7 @@ class Cell
     }
 
     /**
-     * Sets cell alive.
+     * Change state of cell to be alive.
      */
     public function life()
     {
@@ -60,7 +59,7 @@ class Cell
     }
 
     /**
-     * Sets cell dead.
+     * Change state of cell to be dead.
      */
     public function dead()
     {
