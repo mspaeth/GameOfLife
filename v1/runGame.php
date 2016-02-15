@@ -19,31 +19,51 @@ $options = new Getopt(array(
     array('f','filepath',Getopt::OPTIONAL_ARGUMENT,'Path to txt file(only required if txt is choosen as input'),
     array('o','output',Getopt::REQUIRED_ARGUMENT,'Output in console, as png or gif'),
     array('c','numCycles',Getopt::REQUIRED_ARGUMENT, 'Number of rounds the game should play 1-*'),
-    array('H', 'help', Getopt::NO_ARGUMENT)
+    array('h', 'help', Getopt::NO_ARGUMENT)
 
 ));
 
 $options->parse();
 
-if ($options->getOption('input'))
+if ($options->getOption("help"))
 {
-    if ($options->getOption("filepath")) $config = array('filePath' => $options->getOption('filepath'));
-    $inputClass = $options->getOption("input")."Input";
-    $input = new $inputClass($config);
-
-    if ($options->getOption("output"))
+    $options->showHelp();
+}
+else
+{
+    if ($options->getOption('input'))
     {
+        if ($options->getOption("filepath")) $config = array('filePath' => $options->getOption('filepath'));
+        $inputClass = $options->getOption("input")."Input";
+        $input = new $inputClass($config);
+
         $outputClass = $options->getOption("output")."Output";
         $numCycles = $options->getOption('numCycles');
 
         if ($options->getOption("numCycles"))
         {
-            $gameFieldController = new GameFieldController($input->getGameField());
-            $output = new $outputClass();
-            $output->output($gameFieldController, $numCycles);
+            if ($options->getOption("output"))
+            {
+                $gameFieldController = new GameFieldController($input->getGameField());
+                $output = new $outputClass();
+                $output->output($gameFieldController, $numCycles);
+            }
+            else
+            {
+                $options->showHelp();
+                die("Please specify an output mode, view help for more information!");
+            }
         }
-        else die("Please specify a number of cycles the game should be played");
+        else
+        {
+            $options->showHelp();
+            die("Please specify a number of cycles the game should be played, view help for more information!");
+        }
     }
-    else die("Please specify an output mode");
+    else
+    {
+        $options->showHelp();
+        die("Please specify input mode, view help for more information!");
+    }
 }
-else die("Wrong input");
+

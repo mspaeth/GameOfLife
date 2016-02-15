@@ -19,26 +19,39 @@ abstract class BaseInput
     protected $height;
 
     /**
-     * Class constructor
+     * Class constructor which creates the gamefield and then sets the active cells.
+     *
      * @param array $_config If a plugin needs specific values you can give an associative array as parameter which contains the necessary data.
      */
-    abstract public function __construct(array $_config = NULL);
+    public function __construct(array $_config = null)
+    {
+        $this->createGamefield();
+        $this->setCells();
+    }
 
     /**
-     * This function creates the gamefield.
+     * Creates the gamefield and calls setCells() to set cells alive.
      */
-    abstract protected function createGamefield();
+    public function createGamefield()
+    {
+        $this->gamefield = new GameField($this->width, $this->height);
+    }
 
     /**
-     * This function sets the cells alive for the first round.
+     * This function needs to be implemented in every plugin which extends from this class.
+     * This function sets cells alive.
      */
     abstract protected function setCells();
 
     /**
      * This function returns the gamefield.
+     *
      * @return GameField
      */
-    abstract public function getGameField();
+    public function getGameField()
+    {
+        return $this->gamefield;
+    }
 
 
 }
