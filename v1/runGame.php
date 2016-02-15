@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * @version 2.8
+ * @version 0.1
  * @copyright 2016 CN-Consult GmbH
  * @author Max Späth <max.spaeth@cn-consult.eu>
  */
 
 require_once "lib/gamefieldcontroller.php";
 require_once "lib/gamefield.php";
-require_once "lib/consoleOutput.php";
+require_once "lib/consoleoutput.php";
 include_once("lib/external/vendor/autoload.php");
 
 

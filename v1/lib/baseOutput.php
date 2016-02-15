@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * @version 2.8
+ * @version 0.1
  * @copyright 2016 CN-Consult GmbH
  * @author Max Späth <max.spaeth@cn-consult.eu>
  */
 
 /**
- * This abstract class is the baseClass for the output plugins.
+ * This abstract class is the base class for the output plugins.
  * All output classes have to extend from this class.
  */
 abstract class BaseOutput
