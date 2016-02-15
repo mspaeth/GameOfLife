@@ -1,21 +1,21 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 15.01.2016
- * Time: 12:01
- *
- * This class controlls the gamefield and does the main game logic.
+ * @file
+ * @version 0.1
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
  */
 
-
+/**
+ * This class does the game logic and sets the cells dead or alive in the gamefield.
+ */
 class GameFieldController
 {
     private $gameField;
 
     /**
      * GameFieldController constructor.
+     * 
      * @param $_gameField gameField An instance of the gameField class.
      */
     public function __construct($_gameField)
@@ -25,7 +25,8 @@ class GameFieldController
 
     /**
      * This function does the main game logic.
-     * It calcualtes the amount of neighbours for each cell, and depending on the game rules sets the cell alive or dead.
+     * It calculates the amount of neighbours for each cell, and depending on the game rules sets the cell alive or dead.
+     *
      * @return bool
      */
     public function run()
@@ -35,14 +36,14 @@ class GameFieldController
         foreach ($currentGameField->getCells() as $cell)
         {
             $neighbours = $currentGameField->getNeighboursByCell($cell);
-            if ($cell->isAlive == 0)
+            if (!$cell->isAlive())
             {
-                if($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=1;
+                if($currentGameField->getNeighboursByCell($cell) == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->life();
             }
-            if ($cell->isAlive == 1)
+            if ($cell->isAlive())
             {
-                if($neighbours == 2 || $neighbours == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=1;
-                else $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->isAlive=0;
+                if($neighbours == 2 || $neighbours == 3) $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->life();
+                else $this->gameField->getCellByCoords($cell->getCoordX(),$cell->getCoordY())->dead();
             }
         }
         return true;
@@ -50,7 +51,8 @@ class GameFieldController
 
     /**
      * Returns the gameField.
-     * @return gameField
+     *
+     * @return gameField The gamefield.
      */
     public function getGameField()
     {

@@ -1,25 +1,50 @@
 <?php
+/**
+ * @file
+ * @version 0.1
+ * @copyright 2016 CN-Consult GmbH
+ * @author Max Späth <max.spaeth@cn-consult.eu>
+ */
+
+require_once "cell.php";
 
 /**
- * Created by PhpStorm.
- * User: Max
- * Date: 15.01.2016
- * Time: 12:02
+ * This class is the gamefield which contains an array of cells.
  */
 class GameField
 {
     /** @var  Cell[] */
     private $cells;
+    private $width;
+    private $height;
 
     /**
      * GameField constructor.
-     * @param $_cells cell[] Array which contains instances of cell.
+     *
+     * @param int $_width Width of the gamefield (x-axis).
+     * @param int $_height Height of the gamefield (y-axis).
      */
-    public function __construct($_cells)
+    public function __construct($_width, $_height)
     {
-        $this->cells = $_cells;
+        $this->width = $_width;
+        $this->height = $_height;
+        $this->cells = array();
+        $this->createCells();
     }
 
+    /**
+     * Creates the array of cells.
+     */
+    private function createCells()
+    {
+        for ($i=0; $i<$this->height; $i++)
+        { // Create columns
+            for ($j=0; $j<$this->width; $j++)
+            { // Create rows
+                $this->cells[] = new Cell($j,$i,0);
+            }
+        }
+    }
     /**
      * Necessary for deep cloning the gamefield.
      */
@@ -78,11 +103,29 @@ class GameField
             {
                 if ($this->getCellByCoords($nX,$nY) && !($nX == $x && $nY == $y))
                 {
-                    if ($this->getCellByCoords($nX,$nY)->isAlive == 1) $neighbours++;
+                    if ($this->getCellByCoords($nX,$nY)->isAlive()) $neighbours++;
                 }
             }
         }
 
         return $neighbours;
+    }
+
+    /**
+     * Returns the length of the y-axis of the gamefield.
+     * @return int Height of the gamefield.
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
+     * Returns the length of the x-axis of the gamefield.
+     * @return int Width of the gamefield.
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 }
