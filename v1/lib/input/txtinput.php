@@ -9,7 +9,6 @@
 
 require_once __DIR__."/../baseinput.php";
 require_once __DIR__."/../gamefield.php";
-require_once __DIR__."/../gamefieldcontroller.php";
 
 /**
  * This plugins reads a text file which contains the start gamefield of the GoL.
