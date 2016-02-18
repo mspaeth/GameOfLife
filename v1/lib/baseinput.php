@@ -14,7 +14,6 @@
 abstract class BaseInput
 {
     protected $gamefield;
-    protected $gamefieldController;
     protected $width;
     protected $height;
 

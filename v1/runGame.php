@@ -23,7 +23,6 @@ $options = new Getopt(array(
 
 ));
 
-echo "test";
 $options->parse();
 
 if ($options->getOption("help"))
@@ -35,6 +34,7 @@ else
     if ($options->getOption('input'))
     {
         if ($options->getOption("filepath")) $config = array('filePath' => $options->getOption('filepath'));
+        else $config = null;
         $inputClass = $options->getOption("input")."Input";
         $input = new $inputClass($config);
 
