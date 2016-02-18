@@ -10,20 +10,35 @@
 require_once __DIR__."/../baseinput.php";
 require_once __DIR__."/../gamefield.php";
 require_once __DIR__."/../gamefieldcontroller.php";
+
 /**
- * This class opens a txt file which contains the start gamefield and sets the necessary cells alive according to the gamefield of the txt file.
- * The path to the txt file is delivered in the $config array.
+ * This plugins reads a text file which contains the start gamefield of the GoL.
+ * The gamefield in the txt should look something like this:
+ *
+ * 00000000
+ * 00000000
+ * 00010000
+ * 00010000
+ * 00010000
+ *
+ * 0 = dead cells
+ * 1 = living cells
+ *
+ * To use this plugin, you have to call the runGame.php with --input Txt and --filePath 'Path to txt file' and also
+ * specify the number of cycles with --numCycles and the output with --output.
+ * Example:
+ * runGame.php --input Txt --filepath D:\gamefield.txt --numCycles 10 --output Console
  */
 class TxtInput extends BaseInput
 {
     private $file;
 
     /**
-     * The constructor sets the the opens the txt file and calls the parent constructor to create the gamefield and set the cells.
+     * The constructor opens the txt file and calls the parent constructor to create the gamefield and set the cells.
      *
-     * @param array|NULL $_config Contains the path to the txt file with the gamefield (Required in this case).
+     * @param array|null $_config Config array which should contain in this context at least the filepath to the txt file, which we need for creating a GameField.
      */
-    public function __construct(array $_config = NULL)
+    public function __construct(array $_config = null)
     {
         if(isset($_config))
         {

@@ -20,6 +20,7 @@ abstract class BaseInput
 
     /**
      * Class constructor which creates the gamefield and then sets the active cells.
+     * This parent constructor MUST be called from every inherited class!
      *
      * @param array $_config If a plugin needs specific values you can give an associative array as parameter which contains the necessary data.
      */
@@ -30,7 +31,7 @@ abstract class BaseInput
     }
 
     /**
-     * Creates the gamefield and calls setCells() to set cells alive.
+     * Creates the gamefield.
      */
     public function createGamefield()
     {
@@ -38,15 +39,14 @@ abstract class BaseInput
     }
 
     /**
-     * This function needs to be implemented in every plugin which extends from this class.
-     * This function sets cells alive.
+     * The implemented function will set depending on their input the given cells alive.
      */
     abstract protected function setCells();
 
     /**
      * This function returns the gamefield.
      *
-     * @return GameField
+     * @return GameField The GameField created by the input plugin.
      */
     public function getGameField()
     {

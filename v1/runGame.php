@@ -15,14 +15,15 @@ foreach (glob('lib/input/*.php') as $file) include( $file );
 
 use Ulrichsg\Getopt;
 $options = new Getopt(array(
-    array('i','input',Getopt::REQUIRED_ARGUMENT,'Input type (for now only txt is implemented'),
+    array('i','input',Getopt::REQUIRED_ARGUMENT,'Specifys how the start gamefield should be read, "txt" for reading from txt file' ),
     array('f','filepath',Getopt::OPTIONAL_ARGUMENT,'Path to txt file(only required if txt is choosen as input'),
-    array('o','output',Getopt::REQUIRED_ARGUMENT,'Output in console, as png or gif'),
+    array('o','output',Getopt::REQUIRED_ARGUMENT,'"console" for console output, "png" for output as png file, "gif" for output as .gif file.'),
     array('c','numCycles',Getopt::REQUIRED_ARGUMENT, 'Number of rounds the game should play 1-*'),
     array('h', 'help', Getopt::NO_ARGUMENT)
 
 ));
 
+echo "test";
 $options->parse();
 
 if ($options->getOption("help"))
@@ -38,10 +39,10 @@ else
         $input = new $inputClass($config);
 
         $outputClass = $options->getOption("output")."Output";
-        $numCycles = $options->getOption('numCycles');
 
         if ($options->getOption("numCycles"))
         {
+            $numCycles = $options->getOption('numCycles');
             if ($options->getOption("output"))
             {
                 $gameFieldController = new GameFieldController($input->getGameField());
