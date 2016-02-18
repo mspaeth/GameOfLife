@@ -33,8 +33,9 @@ else
 {
     if ($options->getOption('input'))
     {
-        if ($options->getOption("filepath")) $config = array('filePath' => $options->getOption('filepath'));
-        else $config = null;
+        $config = array();
+        if ($options->getOption("filepath")) $config['filePath'] = $options->getOption('filepath');
+
         $inputClass = $options->getOption("input")."Input";
         $input = new $inputClass($config);
 

@@ -10,11 +10,8 @@ require_once __DIR__."/../baseinput.php";
 require_once __DIR__."/../gamefield.php";
 
 /**
- * This plugin takes input from the console to specify the width/height of the gamefield and which sets should be set alive.
- * To use it, just set 'console' as --input parameter and set the --numCycles (Number of rounds should be played and the --output (console, png or gif).
- * Example use:
- *
- * runGame.php --input console --numCycles 10 --output console
+ * This plugin asks the user over the console to specify the width/height of the gamefield and which cells sets should be set alive.
+ * To use it, just set 'console' as --input parameter.
  */
 class ConsoleInput extends BaseInput
 {
